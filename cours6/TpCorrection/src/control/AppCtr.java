@@ -37,7 +37,7 @@ public class AppCtr {
         int typeTerrain = mainJSON.getInt("type_terrain");
         double prixTerrainMin = mainJSON.getDouble("prix_m2_min");
         double prixTerrainMax = mainJSON.getDouble("prix_m2_max");
-        String description ;
+        String description=null ;
         
         double superficie =0 ;
         Date dateMesure = new Date();
@@ -137,17 +137,19 @@ public class AppCtr {
             JSONObject singleLot = new JSONObject();
 
 
-
-            singleLot.accumulate("description", "lot 1");
+ for(int i =0; i < ListeItemLotissement.size(); i ++)
+            {
+       
+            singleLot.accumulate("description", description);
             singleLot.accumulate("valeur_par_lot", valeurFonciere+"$");
             lotissementArray.add(singleLot);
 
-            lotissementArray.add(singleLot);
+            
               singleLot.clear();
 
-            valeurFonciereTerrain.accumulate("lotissement", lotissementArray);
-
-
+           
+            }
+ valeurFonciereTerrain.accumulate("lotissement", lotissementArray);
             FileWriter.saveStringIntoFile(valeurFonciereTerrain.toString(), "json/fichierSortieTPA18.json");
         } catch (IOException ex) {
             Logger.getLogger(AppCtr.class.getName()).log(Level.SEVERE, null, ex);
