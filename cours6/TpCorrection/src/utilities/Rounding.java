@@ -14,27 +14,38 @@ import java.math.RoundingMode;
  */
 public class Rounding {
 
-    public static BigDecimal roundingSchoolTax(double valeurTerrain, double tauxTaxeScolaire) {
+    public static BigDecimal roundingSchoolTax(double valeurTerrain) {
         double taxeScolaire;
-        taxeScolaire = Utilities.calculerTaxeScolaire(valeurTerrain, tauxTaxeScolaire);
-        String tScolaire = String.valueOf(Utilities.nombreDecimal(taxeScolaire));
-        BigDecimal scolaire = Utilities.arrondirAu5sous(tScolaire).setScale(2, RoundingMode.HALF_UP);
+        taxeScolaire = Utilities.calculerTaxeScolaire(valeurTerrain);
+        String tScolaire = String.valueOf(nombreDecimal(taxeScolaire));
+        BigDecimal scolaire = arrondirAu5sous(tScolaire).setScale(2, RoundingMode.HALF_UP);
         return scolaire;
     }
 
     public static BigDecimal roundingLotTotalValue(double valeurTerrain) {
-        double valeurTerrainTotal = Utilities.nombreDecimal(valeurTerrain);
+        double valeurTerrainTotal = nombreDecimal(valeurTerrain);
         String valeurFonciereTotale = String.valueOf(valeurTerrainTotal);
-        BigDecimal terrain = Utilities.arrondirAu5sous(valeurFonciereTotale).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal terrain = arrondirAu5sous(valeurFonciereTotale).setScale(2, RoundingMode.HALF_UP);
         return terrain;
     }
 
-    public static BigDecimal roundingMunicipalTax(double valeurTerrain, double tauxTaxeMunicipale) {
+    public static BigDecimal roundingMunicipalTax(double valeurTerrain) {
         double taxeMunicipale;
-        taxeMunicipale = Utilities.calculerTaxeMunicipale(valeurTerrain, tauxTaxeMunicipale);
-        String tMunicipale = String.valueOf(Utilities.nombreDecimal(taxeMunicipale));
-        BigDecimal municipale = Utilities.arrondirAu5sous(tMunicipale).setScale(2, RoundingMode.HALF_UP);
+        taxeMunicipale = Utilities.calculerTaxeMunicipale(valeurTerrain);
+        String tMunicipale = String.valueOf(nombreDecimal(taxeMunicipale));
+        BigDecimal municipale = arrondirAu5sous(tMunicipale).setScale(2, RoundingMode.HALF_UP);
         return municipale;
+    }
+
+    public static double nombreDecimal(double nb) {
+        double nombre = (Math.round(nb * 100)) / 100.0;
+        return nombre;
+    }
+
+    public static BigDecimal arrondirAu5sous(String nb) {
+        BigDecimal amount = new BigDecimal(nb);
+        BigDecimal resultat = new BigDecimal(Math.ceil(amount.doubleValue() * 20) / 20);
+        return resultat;
     }
     
 }
