@@ -158,11 +158,11 @@ public class AppCtr {
             
             //System.out.println("valeur arrondie terrain: " + terrain);
 
-            BigDecimal scolaire = Rounding.roundingSchoolTax(valeurTerrain, tauxTaxeScolaire);
+            BigDecimal scolaire = Rounding.roundingSchoolTax(valeurTerrain);
 
             //System.out.println("taxe scolaire: " + scolaire);
 
-            BigDecimal municipale = Rounding.roundingMunicipalTax(valeurTerrain, tauxTaxeMunicipale);
+            BigDecimal municipale = Rounding.roundingMunicipalTax(valeurTerrain);
 
             //System.out.println("taxe municipale: " + municipale);
 
