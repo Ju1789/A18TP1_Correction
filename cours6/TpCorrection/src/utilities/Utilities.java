@@ -58,62 +58,14 @@ public class Utilities {
     static double valeurFonciereTotale =0;
 
 
-    public static double calculValeurFonciereCommercial( ) {
-        double droitPassage;
-        double montantService;
-        double prixSuperficie = (superficie * prixTerrainMax) + 733.77;
-        //rajouter formule pour arrondir a 0.5 pret;
-        droitPassage = montantPassageBase - (nbDroitPassage * (0.1 * valeurLot));
-        valeurFonciere3 = prixSuperficie + droitPassage;
-        if (superficie < 500) {
-            montantService = 500;
-        } else {
-            montantService = 1500;
-        }
-        valeurFonciere3 += montantService;
-        return valeurFonciere3;
-    }
-
-    public static double calculValeurFonciereResidentiel() {
-        double droitPassage;
-        double montantService;
-        double prixSuperficie = (superficie * ((prixTerrainMax + prixTerrainMin) / 2)) + 733.77;
-        //rajouter formule pour arrondir a 0.5 pret;
-        droitPassage = montantPassageBase - (nbDroitPassage * (0.05 * valeurLot));
-        valeurFonciere2 = prixSuperficie + droitPassage;
-        if (superficie < 500) {
-            montantService = 0;
-        } else if ((superficie > 500) || (superficie < 1000)) {
-            montantService = 500;
-        } else {
-            montantService = 1000;
-        }
-        valeurFonciere2 += montantService;
-        return valeurFonciere2;
-    }
-
-    public static double calculValeurFonciereAgricole() {
-        double droitPassage;
-        double montantService;
-        double prixSuperficie = (superficie * prixTerrainMin) + 733.77;
-        //rajouter formule pour arrondir a 0.5 pret;
-        droitPassage = montantPassageBase - (nbDroitPassage * (0.15 * valeurLot));
-        montantService = 0;
-        valeurFonciere1 = prixSuperficie + droitPassage;
-        valeurFonciere1 += montantService;
-        return valeurFonciere1;
-    }
-        public static double calculValeurFonciereTotale() {
-        double valeurFonciereTotale;
-        valeurFonciereTotale = Math.round(valeurFonciere1 + valeurFonciere2 + valeurFonciere3);
-        return valeurFonciereTotale;
-    }
-public static double calculerTaxeScolaire() {
+   
+   
+public static double calculerTaxeScolaire(double valeurFonciereTotale, double tauxTaxeScolaire) {
         double taxeScolaire = Math.round(valeurFonciereTotale * tauxTaxeMunicipale);
         return taxeScolaire;
     }
 
-    public static double calculerTaxeMunicipale() {
+    public static double calculerTaxeMunicipale(double valeurFonciereTotale, double tauxTaxeScolaire) {
         double taxeMunicipale = Math.round(valeurFonciereTotale * tauxTaxeScolaire);
         return taxeMunicipale;
     }
@@ -134,7 +86,7 @@ public static double calculerTaxeScolaire() {
 
 
     public static BigDecimal arrondirTaxeScolaire() {
-        double tScolaire = Utilities.nombreDecimal(Utilities.calculerTaxeScolaire());
+        double tScolaire = Utilities.nombreDecimal(Utilities.calculerTaxeScolaire(valeurFonciereTotale, tauxTaxeScolaire));
         BigDecimal scolaire = Utilities.arrondirAu5sous(String.valueOf(tScolaire));
         BigDecimal taxeScolaireLot = scolaire.setScale(2, RoundingMode.HALF_UP);
         return taxeScolaireLot;
@@ -143,7 +95,7 @@ public static double calculerTaxeScolaire() {
   
 
     public static BigDecimal arrondirTaxeMunicipale() {
-        double tMunicipale = Utilities.calculerTaxeMunicipale();
+        double tMunicipale = Utilities.calculerTaxeMunicipale(valeurFonciereTotale, tauxTaxeScolaire);
         BigDecimal municipale = Utilities.arrondirAu5sous(String.valueOf(tMunicipale));
         //System.out.println("BigDecimal municipale: " + municipale);
         BigDecimal taxeMunicipaleLot = municipale.setScale(2, RoundingMode.HALF_UP);
