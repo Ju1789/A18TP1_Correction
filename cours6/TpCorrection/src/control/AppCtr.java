@@ -73,7 +73,7 @@ public class AppCtr {
                 //valeur = (superficie + (prixMx+pirMin)/2) + droits de passage + montant pour les services
                 if (typeTerrain == 1) {
                     
-                    double prixSuperficie = (superficie * (prixTerrainMax + prixTerrainMin) / 2) + 733.77;
+                    double prixSuperficie = (superficie * ((prixTerrainMax + prixTerrainMin) / 2)) + 733.77;
                     //rajouter formule pour arrondir a 0.5 pret;
                     droitPassage = 500 - (nbDroitPassage * (0.05 * valeurLot));
                     valeurFonciere = prixSuperficie + droitPassage;
