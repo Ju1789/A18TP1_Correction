@@ -31,12 +31,6 @@ public class FileWriter {
         }
         
     }
-    public static void ecrireFichierSortie(BigDecimal valeurTotaleLot, double valeurFonciere1, double valeurFonciere2, double valeurFonciere3, String sortiePath) {
-        JSONObject valeurFonciereTerrain = new JSONObject();
-        BigDecimal taxeScolaireLot = Utilities.arrondirTaxeScolaire();
-        BigDecimal taxeMunicipaleLot = Utilities.arrondirTaxeMunicipale();
-        Utilities.ecrireFichier(valeurFonciereTerrain, valeurTotaleLot, taxeScolaireLot, taxeMunicipaleLot, valeurFonciere1, valeurFonciere2, valeurFonciere3);
-        FileWriter.saveStringIntoFile(valeurFonciereTerrain.toString(), sortiePath);
-    }
+  
     
 }
