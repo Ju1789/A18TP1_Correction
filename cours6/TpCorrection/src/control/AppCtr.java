@@ -59,7 +59,7 @@ public class AppCtr {
             double prixTerrainMax = mainJSON.getDouble("prix_m2_max");
 
             String description = null;
-              JSONArray lotissementArray = new JSONArray();
+            JSONArray lotissementArray = new JSONArray();
             JSONObject singleLot = new JSONObject();
 
             for (int i = 0; i < ListeItemLotissement.size(); i++) {
@@ -72,6 +72,7 @@ public class AppCtr {
                 //CALCULER la valuer par lot
                 //valeur = (superficie + (prixMx+pirMin)/2) + droits de passage + montant pour les services
                 if (typeTerrain == 1) {
+                    
                     double prixSuperficie = (superficie * (prixTerrainMax + prixTerrainMin) / 2) + 733.77;
                     //rajouter formule pour arrondir a 0.5 pret;
                     droitPassage = 500 - (nbDroitPassage * (0.05 * valeurLot));
@@ -84,10 +85,12 @@ public class AppCtr {
                         montantService = 1000 * nbServiceTotal;
                     }
                     valeurFonciere += montantService;
+                    
                     singleLot.accumulate("description", description);
-                singleLot.accumulate("valeur_par_lot", valeurFonciere + "$");
-                lotissementArray.add(singleLot);
-                singleLot.clear();
+                    singleLot.accumulate("valeur_par_lot", valeurFonciere + "$");
+                    lotissementArray.add(singleLot);
+                    singleLot.clear();
+                    
                     System.out.println(valeurFonciere);
 
                 } else if (typeTerrain == 2) {
@@ -105,11 +108,14 @@ public class AppCtr {
                         }
                     }
                     valeurFonciere += montantService;
-                singleLot.accumulate("description", description);
-                singleLot.accumulate("valeur_par_lot", valeurFonciere + "$");
-                lotissementArray.add(singleLot);
-                singleLot.clear();
+                    
+                    singleLot.accumulate("description", description);
+                    singleLot.accumulate("valeur_par_lot", valeurFonciere + "$");
+                    lotissementArray.add(singleLot);
+                    singleLot.clear();
+                    
                     System.out.println(valeurFonciere);
+                    
                 } else if (typeTerrain == 0) {
                     double prixSuperficie = (superficie * prixTerrainMin) + 733.77;
                     //rajouter formule pour arrondir a 0.5 pret;
@@ -117,11 +123,14 @@ public class AppCtr {
                     montantService = 0;
                     valeurFonciere = prixSuperficie + droitPassage;
                     valeurFonciere += montantService;
+                    
                     singleLot.accumulate("description", description);
-                singleLot.accumulate("valeur_par_lot", valeurFonciere + "$");
-                lotissementArray.add(singleLot);
-                singleLot.clear();
+                    singleLot.accumulate("valeur_par_lot", valeurFonciere + "$");
+                    lotissementArray.add(singleLot);
+                    singleLot.clear();
+                    
                     System.out.println(valeurFonciere);
+                    
                 } else {
                     System.out.println("ERROR");
                 }
@@ -154,20 +163,20 @@ public class AppCtr {
             double valeurTerrainTotal = Utilities.nombreDecimal(valeurTerrain);
             String valeurFonciereTotale = String.valueOf(valeurTerrainTotal);
             BigDecimal terrain = Utilities.arrondirAu5sous(valeurFonciereTotale).setScale(2, RoundingMode.HALF_UP);
-           ;
-            System.out.println("valeur arrondie terrain: "+terrain);
-            
+            ;
+            System.out.println("valeur arrondie terrain: " + terrain);
+
             taxeScolaire = Utilities.calculerTaxeScolaire(valeurTerrain, tauxTaxeScolaire);
             String tScolaire = String.valueOf(Utilities.nombreDecimal(taxeScolaire));
             BigDecimal scolaire = Utilities.arrondirAu5sous(tScolaire).setScale(2, RoundingMode.HALF_UP);;
-         
-            System.out.println("taxe scolaire: "+scolaire);
-            
+
+            System.out.println("taxe scolaire: " + scolaire);
+
             taxeMunicipale = Utilities.calculerTaxeMunicipale(valeurTerrain, tauxTaxeMunicipale);
             String tMunicipale = String.valueOf(Utilities.nombreDecimal(taxeMunicipale));
             BigDecimal municipale = Utilities.arrondirAu5sous(tMunicipale).setScale(2, RoundingMode.HALF_UP);
-            
-            System.out.println("taxe municipale: "+municipale);
+
+            System.out.println("taxe municipale: " + municipale);
 
             valeurFonciereTerrain.accumulate("valeur_fonciere_totale", terrain + "$");
             valeurFonciereTerrain.accumulate("taxe_scolaire", scolaire + "$");
@@ -175,7 +184,6 @@ public class AppCtr {
 
 //            JSONArray lotissementArray = new JSONArray();
 //            JSONObject singleLot = new JSONObject();
-
 //            for (int i = 0; i < ListeItemLotissement.size(); i++) {
 //                lotissement = ListeItemLotissement.getJSONObject(i);
 //                description = lotissement.getString("description");
