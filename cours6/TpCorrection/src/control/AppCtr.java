@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import utilities.Utilities;
 
 public class AppCtr {
 
@@ -43,8 +44,8 @@ public class AppCtr {
         String dateMesureEnString;
         int nbServiceBase = 2;
         double nbDroitPassage = 0 ; 
-        double taxeMunicipale = 0.025;
-        double taxeScolaire = 0.012;
+        double tauxTaxeMunicipale = 0.025;
+        double tauxTaxeScolaire = 0.012;
         double montantFixe = 733.77;
         double montantPassageBase = 500.00;
         double valeurFonciere = 0;
@@ -52,6 +53,8 @@ public class AppCtr {
         double droitPassage=0;
         double valeurLot = 0;
         double valeurTerrain = 0;
+        double taxeMunicipale;
+        double taxeScolaire;
         //prixspuerficie = prixLot;
         
        
@@ -120,7 +123,32 @@ public class AppCtr {
                         }
                 //valeur par lot    
        System.out.println("lotissement ajouter " + lotissement.toString());
-            }        
+            }  
+             JSONObject valeurFonciereTerrain = new JSONObject();
+
+            taxeScolaire = Utilities.calculerTaxeScolaire();
+            taxeMunicipale = Utilities.calculerTaxeMunicipale();
+
+            valeurFonciereTerrain.accumulate("valeur_fonciere_totale", valeurTerrain +"$");
+            valeurFonciereTerrain.accumulate("taxe_scolaire", taxeScolaire+"$");
+            valeurFonciereTerrain.accumulate("taxe_municipale", taxeMunicipale+"$");
+
+            JSONArray lotissementArray = new JSONArray();
+            JSONObject singleLot = new JSONObject();
+
+
+
+            singleLot.accumulate("description", "lot 1");
+            singleLot.accumulate("valeur_par_lot", valeurFonciere+"$");
+            lotissementArray.add(singleLot);
+
+            lotissementArray.add(singleLot);
+              singleLot.clear();
+
+            valeurFonciereTerrain.accumulate("lotissement", lotissementArray);
+
+
+            FileWriter.saveStringIntoFile(valeurFonciereTerrain.toString(), "json/fichierSortieTPA18.json");
         } catch (IOException ex) {
             Logger.getLogger(AppCtr.class.getName()).log(Level.SEVERE, null, ex);
         }
