@@ -26,84 +26,20 @@ import net.sf.json.JSONObject;
  */
 public class Utilities {
 
-    static double prixTerrainMin;
-    static double prixTerrainMax;
-    static double prixTerrainMoyenne;
-    static String description;
-    static int typeTerrain;
-    static double superficie;
-    static int nbDroitPassage;
-    static double montantServiceMin;
-    static double montantServiceMax;
-    static double taxeMunicipale;
-    static double taxeScolaire;
+ 
 
-    
-
-
-
+    private static final double TAUX_TAXE_MUNICIPALE = 0.025;
+    private static final double TAUX_TAXE_SCOLAIRE = 0.012;
     int nbServiceBase = 2;
-    static double tauxTaxeMunicipale = 0.025;
-    static double tauxTaxeScolaire = 0.012;
-    static double montantFixe = 733.77;
-    static double montantPassageBase = 500.00;
-    static double valeurFonciere = 0;
-    static double montantService = 0;
-    static double droitPassage = 0;
-    static double valeurLot = 0;
-    static double valeurFonciere3 = 0;
-    static double valeurFonciere1 = 0;
-    static double valeurFonciere2 = 0;
-    static double valeurFonciereHT;
-    static double valeurFonciereTotale =0;
 
-
-   
-   
-public static double calculerTaxeScolaire(double valeurFonciereTotale, double tauxTaxeScolaire) {
-        double taxeScolaire = Math.round(valeurFonciereTotale * tauxTaxeMunicipale);
+    public static double calculerTaxeScolaire(double valeurFonciereTotale) {
+        double taxeScolaire = valeurFonciereTotale * TAUX_TAXE_SCOLAIRE;
         return taxeScolaire;
     }
 
-    public static double calculerTaxeMunicipale(double valeurFonciereTotale, double tauxTaxeScolaire) {
-        double taxeMunicipale = Math.round(valeurFonciereTotale * tauxTaxeScolaire);
+    public static double calculerTaxeMunicipale(double valeurFonciereTotale) {
+        double taxeMunicipale = valeurFonciereTotale * TAUX_TAXE_MUNICIPALE;
         return taxeMunicipale;
     }
-   
-  
-    public static double nombreDecimal(double nb) {
-        double nombre = (Math.round(nb * 100)) / 100.00;
-        return nombre;
-    }
-
-    public static BigDecimal arrondirAu5sous(String nb) {
-        BigDecimal amount = new BigDecimal(nb);
-
-        BigDecimal resultat = new BigDecimal(Math.ceil(amount.doubleValue() * 20) / 20);
-
-        return resultat;
-    }
-
-
-    public static BigDecimal arrondirTaxeScolaire() {
-        double tScolaire = Utilities.nombreDecimal(Utilities.calculerTaxeScolaire(valeurFonciereTotale, tauxTaxeScolaire));
-        BigDecimal scolaire = Utilities.arrondirAu5sous(String.valueOf(tScolaire));
-        BigDecimal taxeScolaireLot = scolaire.setScale(2, RoundingMode.HALF_UP);
-        return taxeScolaireLot;
-    }
-
-  
-
-    public static BigDecimal arrondirTaxeMunicipale() {
-        double tMunicipale = Utilities.calculerTaxeMunicipale(valeurFonciereTotale, tauxTaxeScolaire);
-        BigDecimal municipale = Utilities.arrondirAu5sous(String.valueOf(tMunicipale));
-        //System.out.println("BigDecimal municipale: " + municipale);
-        BigDecimal taxeMunicipaleLot = municipale.setScale(2, RoundingMode.HALF_UP);
-        return taxeMunicipaleLot;
-    }
-
-
-
-    
 
 }
