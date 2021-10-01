@@ -45,7 +45,8 @@ public class AppCtr {
         double superficie = 0;
         int nbServices = 0;
         //prixspuerficie = prixLot;
-        final String FILEPATH = "json/jsontpa18test.json";
+        final String FILEPATH = args[0];
+        final String FILEPATH_WRITING = args[1];
         //lire le fichier Json 
         String myJson;
         try {
@@ -167,7 +168,7 @@ public class AppCtr {
             //System.out.println("taxe municipale: " + municipale);
 
             FileWriting.populatingFileWritingJSONObject(valeurFonciereTerrain, terrain, scolaire, municipale, lotissementArray);
-            FileWriter.saveStringIntoFile(valeurFonciereTerrain.toString(), "json/fichierSortieTPA18.json");
+            FileWriter.saveStringIntoFile(valeurFonciereTerrain.toString(), FILEPATH_WRITING);
         } catch (IOException ex) {
             Logger.getLogger(AppCtr.class.getName()).log(Level.SEVERE, null, ex);
         }
